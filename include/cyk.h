@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CYK_H
+#define CYK_H
 
 #include "grammar.h"
 #include <algorithm>
@@ -16,3 +17,5 @@ public:
 	std::string algorithm(Grammar& grammar, std::string word);
 	const std::vector<std::vector<std::string>>& getTable() const;
 };
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GRAMMAR_H
+#define GRAMMAR_H
 
 #include <map>
 #include <vector>
@@ -35,3 +36,4 @@ public:
 	friend std::ostream& operator<<(std::ostream& ostream, const Grammar& grammar);
 };
 
+#endif
