@@ -21,7 +21,7 @@ void CYK::startTable(int wordLength)
 std::string CYK::algorithm(Grammar& grammar, std::string word)
 {
 	if (word.empty()) {
-		return "A palavra n�o � gerada pela gram�tica.";
+		return "A palavra não é gerada pela gramática.";
 	}
 	int wordLength = signed(word.size());
 	int count = 0;
@@ -42,7 +42,6 @@ std::string CYK::algorithm(Grammar& grammar, std::string word)
 			aux1[0] = iterador3->second;
 			aux1[1] = '\0';
 			aux2 = &aux1[0];
-			//aux3 = aux2;
 			if (aux3.empty()) {
 				aux3.append(aux2);
 			}
@@ -58,28 +57,28 @@ std::string CYK::algorithm(Grammar& grammar, std::string word)
 	auto productions = grammar.getInvProductions();
 	int j = 0;
 	//A cada iteração l, verifica se é possível gerar l símbolos da palavra através das regras da gramática.
-	//Com l = 2, verifica se � poss�vel gerar 2 s�mbolos da palavra atrav�s das regras da gram�tica. Por exemplo, abaab. Verifica se � poss�vel gerar "ab", depois "ba", por fim "ab"
-	//Com l = 3, verifica se � poss�vel gerar 3 s�mbolos da palavra atrav�s das regras da gram�tica. Por exemplo, abaab. Verifica se � poss�vel gerar "aba", depois "baa", depois "aab"
-	//Com l = 4, at� l = tamanho da palavra.
-	//No final, com l = tamanho da palavra, verifica se � poss�vel gerar os n s�mbolos da palavra atrav�s do s�mbolo inicial da gram�tica. Por exemplo, abaab, Com o resultado obtido nas itera��es anteriores,
-	//conseguimos verificar se � poss�vel gerar a palavra inteira pois, o algoritmo gera uma esp�cie de arvore de deriva��o. Cada itera��o l utiliza de resultados gerados em itera��es 
-	//anteriores para conseguir os resultados da itera��o atual.
+	//Com l = 2, verifica se é possível gerar 2 símbolos da palavra através das regras da gramática. Por exemplo, abaab. Verifica se é possível gerar "ab", depois "ba", por fim "ab"
+	//Com l = 3, verifica se é possível gerar 3 símbolos da palavra através das regras da gramática. Por exemplo, abaab. Verifica se é possível gerar "aba", depois "baa", depois "aab"
+	//Com l = 4, até l = tamanho da palavra.
+	//No final, com l = tamanho da palavra, verifica se é possível gerar os n símbolos da palavra através do símbolo inicial da gramática. Por exemplo, abaab, Com o resultado obtido nas iterações anteriores,
+	//conseguimos verificar se é possível gerar a palavra inteira pois, o algoritmo gera uma espécie de arvore de derivação. Cada iteração l utiliza de resultados gerados em iterações 
+	//anteriores para conseguir os resultados da iteração atual.
 	for (int l = 2; l < wordLength + 1; l++) {
-		//Faz o que foi escrito nas linhas 63, 64, 65, 66. Obter substrings da palavra para verificar se � poss�vel gera-las. In�cio da substring.
+		//Faz o que foi escrito nas linhas 63, 64, 65, 66. Obter substrings da palavra para verificar se é possível gera-las. Início da substring.
 		for (int i = 0; i < wordLength - l + 1; i++) {
 			j = i + l - 1;
-			//Faz o que foi escrito nas linhas 63, 64, 65, 66. Obter substrings da palavra para verificar se � poss�vel gera-las. Fim da substring. Come�a em palavra[i] e termina em palavra[k].
+			//Faz o que foi escrito nas linhas 63, 64, 65, 66. Obter substrings da palavra para verificar se é possível gera-las. Fim da substring. Começa em palavra[i] e termina em palavra[k].
 			for (int k = i; k < j; k++) {
-				//Obtendo um n� da arvore que foi gerado em itera��es anteriores
+				//Obtendo um nó da arvore que foi gerado em iterações anteriores
 				std::string& aux1 = this->table[i][k];
-				//Obtendo um n� da arvore que foi gerado em itera��es anteriores
+				//Obtendo um nó da arvore que foi gerado em iterações anteriores
 				std::string& aux3 = this->table[k + 1][j];
-				//N� da arvore que ser� gerado na itera��o atual
+				//Nó da arvore que será gerado na iteração atual
 				std::string& aux5 = this->table[i][j];
-				//Procurando por produ��es do tipo A -> BC
-				//Verificando se existe alguma produ��o na gram�tica do tipo P -> this->tabela[i][k]this->tabela[k + 1][j]
-				//Se existir, a cabe�a dessa produ��o(P) � adicionada em this->tabela[i][j]
-				//A compara��o se da entre 2 vari�veis (aux1 e aux3), pois juntas representam regras do tipo A => BC, onde B � aux1 e C � aux3. aux5 representa a cabe�a da produ��o A => BC.
+				//Procurando por produções do tipo A -> BC
+				//Verificando se existe alguma produção na gramática do tipo P -> this->tabela[i][k]this->tabela[k + 1][j]
+				//Se existir, a cabeçaa dessa produção(P) é adicionada em this->tabela[i][j]
+				//A comparação se da entre 2 variáveis (aux1 e aux3), pois juntas representam regras do tipo A => BC, onde B é aux1 e C é aux3. aux5 representa a cabeça da produção A => BC.
 				for (auto iterador = productions.begin(); iterador != productions.end(); iterador++) {
 					if (std::find(aux1.begin(), aux1.end(), iterador->second[0]) != aux1.end() &&
 						std::find(aux3.begin(), aux3.end(), iterador->second[1]) != aux3.end()) {
@@ -98,6 +97,6 @@ std::string CYK::algorithm(Grammar& grammar, std::string word)
 	}
 	std::string aux = this->table[0][wordLength - 1];
 	auto iterador = std::find(aux.begin(), aux.end(), grammar.getStartSymbol()[0]);
-	//A palavra � reconhecida se o s�mbolo inicial da gram�tica estiver na posi��o [0][tamanho_palavra - 1] da tabela
-	return iterador != aux.end() ? "A palavra � gerada pela gram�tica." : "A palavra n�o � gerada pela gram�tica.";
+	//A palavra é reconhecida se o símbolo inicial da gramática estiver na posição [0][tamanho_palavra - 1] da tabela
+	return iterador != aux.end() ? "A palavra é gerada pela gramática." : "A palavra não é gerada pela gramática.";
 }

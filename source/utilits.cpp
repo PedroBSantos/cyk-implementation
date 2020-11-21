@@ -1,5 +1,4 @@
 #include "../include/utilits.h"
-#include <iostream>
 
 /*Tabela gerada durante a aplicação do CYK*/
 std::string showTable(std::vector<std::vector<std::string>>& table) {

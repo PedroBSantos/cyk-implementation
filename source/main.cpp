@@ -1,5 +1,4 @@
 #include <iostream>
-#include <locale>
 #include "../include/grammar.h"
 #include "../include/cyk.h"
 #include "../include/utilits.h"
@@ -11,7 +10,6 @@
 	Variavel(espaço)=>(espaço)terminal
 */
 int main() {
-	setlocale(LC_ALL, "");
 	CYK cyk;
 	Grammar grammar = loadFile();
 	std::cout << "Palavra que será verificada: ";
